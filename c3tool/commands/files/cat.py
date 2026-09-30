@@ -8,5 +8,8 @@ COMMAND_SPEC = CommandSpec("cat", "<filepath>", "Prints a text file.", "python3 
 
 class CatCommand(BaseCommand):
     def run(self, args, context: ToolContext) -> str:
-        self.require_count(args, 1, COMMAND_SPEC.usage)
-        return require_existing_file(args[0], context).read_text(encoding="utf-8", errors="replace")
+        # TODO: Read and return one text file.
+        # 1. Require exactly one filepath.
+        # 2. Use ``require_existing_file`` for a friendly missing-file error.
+        # 3. Read as UTF-8; decide how invalid bytes should be handled.
+        raise NotImplementedError("Implement the cat command")

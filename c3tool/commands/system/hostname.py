@@ -9,5 +9,6 @@ COMMAND_SPEC = CommandSpec("hostname", "None", "Prints the system hostname.", "p
 
 class HostnameCommand(BaseCommand):
     def run(self, args, context: ToolContext) -> str:
-        self.require_count(args, 0, COMMAND_SPEC.usage)
-        return socket.gethostname()
+        # TODO: Require no arguments and return the machine hostname.
+        # Look in Python's ``socket`` module for a portable helper.
+        raise NotImplementedError("Implement the hostname command")
