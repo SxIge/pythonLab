@@ -1,0 +1,8 @@
+[project]
+name = "c3t-python-tools"
+version = "1.0.0"
+requires-python = ">=3.11"
+description = "Cross-platform reference toolkit for the Obsidian Runner course"
+
+[tool.pyright]
+pythonVersion = "3.11"
