@@ -29,7 +29,7 @@ class CommandRegistry:
 
     @property
     def specs(self) -> tuple[CommandSpec, ...]:
-        return tuple(self._specs.values())
+        return tuple(sorted(self._specs.values(), key=lambda item: (item.order, item.name.casefold())))
 
     def get_spec(self, name: str) -> CommandSpec | None:
         return self._specs.get(name)

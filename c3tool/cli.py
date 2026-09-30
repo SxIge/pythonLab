@@ -7,16 +7,21 @@ import sys
 from pathlib import Path
 from typing import Sequence, TextIO
 
-from c3tool.catalog import COMMAND_SPECS
+from c3tool.discovery import discover_command_specs
 from c3tool.model import CommandError, FeatureUnavailable, ToolContext
 from c3tool.registry import CommandRegistry
 
 
-def main(argv: Sequence[str] | None = None, stdout: TextIO | None = None, stderr: TextIO | None = None) -> int:
+def main(
+    argv: Sequence[str] | None = None,
+    stdout: TextIO | None = None,
+    stderr: TextIO | None = None,
+    registry: CommandRegistry | None = None,
+) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     stdout = stdout or sys.stdout
     stderr = stderr or sys.stderr
-    registry = CommandRegistry(COMMAND_SPECS)
+    registry = registry or CommandRegistry(discover_command_specs())
 
     if not args or args[0] in {"-h", "--help", "help"}:
         print("Usage: python3 script.py <command> [arguments]", file=stdout)

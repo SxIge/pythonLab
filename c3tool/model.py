@@ -36,6 +36,7 @@ class CommandSpec:
     usage: str
     expected_output: str
     handler: str
+    order: int = 999
 
 
 @dataclass

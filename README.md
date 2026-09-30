@@ -2,12 +2,18 @@
 
 A cross-platform Python command toolkit used as the complete reference implementation for the Obsidian Runner course.
 
-The CLI is intentionally split into two layers:
+Every command now lives in its own file under a category folder:
 
-- `c3tool/catalog.py` is the permanent command contract. It describes every command even when an implementation is missing.
-- `c3tool/handlers/` contains the working implementations that can later be replaced with student stubs.
+```text
+c3tool/commands/
+  basics/example.py
+  files/write_file.py
+  network/ping.py
+  system/process_kill.py
+  ...one module per command
+```
 
-Handlers are loaded only when their command runs. Removing an entire handler module therefore does not stop `script.py`, `commands`, or unrelated commands from working. A removed or unfinished handler produces a clear `command unavailable` message instead of a traceback.
+`script.py` asks `c3tool/discovery.py` to recursively walk those folders. Any module exposing a `COMMAND_SPEC` is registered automatically, so adding a command never requires editing a central command list. Implementations are still loaded lazily when their command runs, so one unfinished command does not prevent unrelated commands from working.
 
 ## Setup
 
@@ -43,22 +49,23 @@ Run `python3 script.py commands` for the complete command, argument, usage, and 
 
 ## Creating the student edition
 
-Keep these files intact:
+Keep the small framework intact:
 
 - `script.py`
-- `c3tool/catalog.py`
 - `c3tool/cli.py`
-- `c3tool/core_commands.py`
+- `c3tool/discovery.py`
 - `c3tool/model.py`
 - `c3tool/registry.py`
 
-Replace selected handler class bodies in `c3tool/handlers/` with:
+Each exercise has exactly one implementation file in `c3tool/commands/<category>/`. Keep its `COMMAND_SPEC`, then replace only the command class's `run` body with:
 
 ```python
 raise NotImplementedError("Rebuild this command")
 ```
 
-You can also remove a handler module completely. The CLI will still start, list every command, and run all remaining implementations.
+The CLI will still start, list the command, and run all remaining implementations. The selected command will return a clear not-implemented error until the student rebuilds it.
+
+To add a brand-new command, copy one command module into any category folder, give it a unique `COMMAND_SPEC.name`, and point `COMMAND_SPEC.handler` at its command class. Recursive discovery handles the rest.
 
 ## Output folder
 

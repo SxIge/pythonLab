@@ -16,6 +16,7 @@ from pathlib import Path
 
 from c3tool.catalog import COMMAND_SPECS
 from c3tool.cli import main
+from c3tool.discovery import discover_command_specs
 from c3tool.model import CommandSpec
 from c3tool.registry import CommandRegistry, MissingCommand
 
@@ -31,6 +32,8 @@ class CliTests(unittest.TestCase):
     def test_catalog_contains_every_level_command(self) -> None:
         self.assertEqual(len(COMMAND_SPECS), 32)
         self.assertEqual(len({item.name for item in COMMAND_SPECS}), 32)
+        self.assertEqual(COMMAND_SPECS, discover_command_specs())
+        self.assertTrue(all(spec.handler.startswith("c3tool.commands.") for spec in COMMAND_SPECS))
 
     def test_example_and_commands(self) -> None:
         code, output, error = invoke(["example"])
