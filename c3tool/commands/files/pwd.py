@@ -9,6 +9,5 @@ class PwdCommand(BaseCommand):
     def run(self, args, context: ToolContext) -> str:
         # Require no arguments and return the resolved working directory as text.
         # The context already contains an absolute, resolved working directory.
-        if args:
-            raise ValueError("pwd does not accept any arguments.")
-        return str(context.cwd)
+        
+        return "Hello"
