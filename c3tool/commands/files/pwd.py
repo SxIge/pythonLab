@@ -7,6 +7,8 @@ COMMAND_SPEC = CommandSpec("pwd", "None", "Prints the current working directory.
 
 class PwdCommand(BaseCommand):
     def run(self, args, context: ToolContext) -> str:
-        # TODO: Require no arguments and return ``context.cwd`` as text.
+        # Require no arguments and return the resolved working directory as text.
         # The context already contains an absolute, resolved working directory.
-        raise NotImplementedError("Implement the pwd command")
+        if args:
+            raise ValueError("pwd does not accept any arguments.")
+        return str(context.cwd)
