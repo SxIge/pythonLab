@@ -7,6 +7,8 @@ COMMAND_SPEC = CommandSpec("example", "None", "Prints hello world.", "python3 sc
 
 class ExampleCommand(BaseCommand):
     def run(self, args, context: ToolContext) -> str:
+        self.require_count(args, 0, "Unexpected arguments provided")
+        return "hello world"
         # TODO: This is the smallest exercise in the course.
         # 1. Reject unexpected arguments with ``self.require_count``.
         # 2. Return the exact greeting described by COMMAND_SPEC.
