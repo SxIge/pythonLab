@@ -13,4 +13,5 @@ class WriteFileCommand(BaseCommand):
         # 2. Resolve the filename with ``expand_path``.
         # 3. Join all remaining arguments so spaces in the text are preserved.
         # 4. Create missing parent folders, write UTF-8 text, and confirm the path.
-        raise NotImplementedError("Implement the writeFile command")
+        write_path = expand_path(args[0], context.cwd)
+        text_to_write = " ".join(args[1:])  
